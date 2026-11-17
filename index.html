@@ -1,0 +1,883 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roam & Revel | Travel Journal</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+:root {
+    --ink: #202b35;
+    --muted: #66727c;
+    --accent: #d66b4d;
+    --cream: #f7f3ed;
+    --white: #fff;
+    --blue: #244b5a;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+}
+
+header {
+    min-height: 76px;
+    padding: 15px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    box-shadow: 0 3px 16px #1c293010;
+}
+
+.brand {
+    font-family: Georgia, serif;
+    font-size: 27px;
+    font-weight: bold;
+    color: var(--blue);
+}
+
+.brand span {
+    color: var(--accent);
+}
+
+nav {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px 0;
+    border-bottom: 2px solid transparent;
+}
+
+nav a:hover, nav a.active {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.hero {
+    min-height: 610px;
+    display: flex;
+    align-items: center;
+    padding: 70px 9%;
+    background:
+    linear-gradient(90deg, #142b39d9, #142b3970, #142b3920),
+    url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1900&q=85') center/cover;
+    color: white;
+}
+
+.hero-inner {
+    max-width: 650px;
+}
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #ffd2b9;
+    margin-bottom: 18px;
+}
+
+.hero h1 {
+    font-family: Georgia, serif;
+    font-size: clamp(42px, 6vw, 70px);
+    line-height: 1.08;
+    margin-bottom: 22px;
+}
+
+.hero p {
+    font-size: 17px;
+    max-width: 550px;
+    color: #f0f0ed;
+    margin-bottom: 30px;
+}
+
+.button {
+    display: inline-block;
+    border: 0;
+    border-radius: 3px;
+    background: var(--accent);
+    color: white;
+    text-decoration: none;
+    padding: 13px 23px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.button:hover {
+    background: #b94f35;
+    transform: translateY(-2px);
+}
+
+.button.outline {
+    background: transparent;
+    border: 1px solid white;
+    margin-left: 10px;
+}
+
+.button.outline:hover {
+    background: white;
+    color: var(--blue);
+}
+
+section {
+    padding: 78px 8%;
+    scroll-margin-top: 85px;
+}
+
+.section-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.kicker {
+    color: var(--accent);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+h2 {
+    font-family: Georgia, serif;
+    font-size: clamp(30px, 4vw, 42px);
+    line-height: 1.15;
+    color: var(--blue);
+    margin-top: 7px;
+}
+
+.section-top p {
+    max-width: 390px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.destination-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.place-card {
+    background: white;
+    overflow: hidden;
+    border-radius: 7px;
+    box-shadow: 0 8px 24px #1d2d3710;
+    transition: .25s;
+}
+
+.place-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 13px 28px #1d2d3720;
+}
+
+.place-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.tag {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.card-body h3 {
+    font-family: Georgia, serif;
+    font-size: 24px;
+    color: var(--blue);
+    margin: 7px 0;
+}
+
+.card-body p {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 17px;
+}
+
+.text-button {
+    border: 0;
+    background: none;
+    color: var(--accent);
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.text-button:hover {
+    text-decoration: underline;
+}
+
+.feature-band {
+    background: var(--blue);
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 45px;
+    align-items: center;
+}
+
+.feature-band img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.feature-band h2 {
+    color: white;
+    margin: 10px 0 18px;
+}
+
+.feature-band p {
+    color: #dbe4e6;
+    margin-bottom: 20px;
+}
+
+.stats {
+    display: flex;
+    gap: 30px;
+    margin-top: 25px;
+}
+
+.stats strong {
+    display: block;
+    font-family: Georgia, serif;
+    font-size: 27px;
+    color: #ffd0b8;
+}
+
+.stats span {
+    font-size: 12px;
+    color: #dbe4e6;
+}
+
+.tips {
+    background: white;
+}
+
+.tip-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 17px;
+    margin-top: 30px;
+}
+
+.tip {
+    padding: 25px 20px;
+    background: var(--cream);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+}
+
+.tip .emoji {
+    font-size: 27px;
+}
+
+.tip h3 {
+    font-family: Georgia, serif;
+    color: var(--blue);
+    margin: 10px 0 6px;
+    font-size: 20px;
+}
+
+.tip p {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.contact-wrap {
+    display: grid;
+    grid-template-columns: .8fr 1.2fr;
+    gap: 55px;
+    align-items: start;
+}
+
+.contact-copy p {
+    color: var(--muted);
+    margin-top: 15px;
+}
+
+.contact-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #d9d5ce;
+    background: white;
+    border-radius: 3px;
+    font: 14px Arial;
+    outline: none;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: var(--accent);
+}
+
+.contact-form textarea {
+    grid-column: 1/-1;
+    min-height: 125px;
+    resize: vertical;
+}
+
+.contact-form button {
+    justify-self: start;
+}
+
+#formMessage {
+    grid-column: 1/-1;
+    color: #28704f;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+footer {
+    background: #172d38;
+    color: #dce4e5;
+    padding: 28px 8%;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+    font-size: 13px;
+}
+
+footer strong {
+    font-family: Georgia, serif;
+    font-size: 19px;
+    color: white;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #101c22c9;
+    z-index: 50;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-box {
+    background: white;
+    width: min(540px, 100%);
+    max-height: 90vh;
+    overflow: auto;
+    border-radius: 7px;
+    padding: 30px;
+    position: relative;
+}
+
+.modal-box h2 {
+    font-size: 32px;
+    margin: 5px 0 15px;
+}
+
+.modal-box p {
+    color: var(--muted);
+    margin: 10px 0;
+}
+
+.modal-box .close {
+    position: absolute;
+    right: 17px;
+    top: 10px;
+    border: 0;
+    background: none;
+    font-size: 29px;
+    cursor: pointer;
+    color: var(--ink);
+}
+
+.modal-box .button {
+    margin-top: 12px;
+}
+
+@media(max-width: 900px) {
+    .destination-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tip-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .feature-band {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-band img {
+        height: 280px;
+    }
+}
+
+@media(max-width: 600px) {
+    header {
+        flex-direction: column;
+        padding: 15px 5%;
+    }
+
+    nav {
+        justify-content: center;
+        gap: 14px;
+    }
+
+    nav a {
+        font-size: 12px;
+    }
+
+    .hero {
+        min-height: 550px;
+        padding: 55px 7%;
+    }
+
+    .hero h1 {
+        font-size: 43px;
+    }
+
+    section {
+        padding: 58px 6%;
+    }
+
+    .section-top {
+        display: block;
+    }
+
+    .section-top p {
+        margin-top: 12px;
+    }
+
+    .destination-grid,
+    .tip-grid,
+    .contact-wrap {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-form {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-form textarea,
+    #formMessage {
+        grid-column: 1;
+    }
+
+    .stats {
+        gap: 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="brand">Roam <span>&</span> Revel.</div>
+
+    <nav>
+        <a class="active" href="#home">Home</a>
+        <a href="#places">Places</a>
+        <a href="#journal">Our Story</a>
+        <a href="#tips">Travel Notes</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<main>
+
+<section class="hero" id="home">
+    <div class="hero-inner">
+        <div class="eyebrow">A journal for curious travellers</div>
+
+        <h1>Find your next<br>beautiful somewhere.</h1>
+
+        <p>
+            From quiet coastlines to lively old towns, collect ideas
+            for journeys that stay with you long after you return.
+        </p>
+
+        <a class="button" href="#places">Browse destinations ↗</a>
+        <a class="button outline" href="#journal">Our story</a>
+    </div>
+</section>
+
+<section id="places">
+
+    <div class="section-top">
+        <div>
+            <div class="kicker">The destination edit</div>
+            <h2>Places worth the journey</h2>
+        </div>
+
+        <p>
+            Five hand-picked escapes for travellers who love scenery,
+            culture, food and a little adventure.
+        </p>
+    </div>
+
+    <div class="destination-grid">
+
+        <article class="place-card">
+            <img src="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=900&q=85" alt="Munnar">
+            <div class="card-body">
+                <div class="tag">India · Hills</div>
+                <h3>Munnar</h3>
+                <p>Rolling tea gardens, misty mornings and winding roads in Kerala's green highlands.</p>
+                <button class="text-button" onclick="showPlace('munnar')">Discover Munnar ↗</button>
+            </div>
+        </article>
+
+        <article class="place-card">
+            <img src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=900&q=85" alt="Kyoto">
+            <div class="card-body">
+                <div class="tag">Japan · Culture</div>
+                <h3>Kyoto</h3>
+                <p>Quiet temples, lantern-lit lanes and traditional gardens filled with seasonal colour.</p>
+                <button class="text-button" onclick="showPlace('kyoto')">Discover Kyoto ↗</button>
+            </div>
+        </article>
+
+        <article class="place-card">
+            <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=900&q=85" alt="Amalfi Coast">
+            <div class="card-body">
+                <div class="tag">Italy · Coast</div>
+                <h3>Amalfi Coast</h3>
+                <p>Colourful cliffside villages, sparkling water and long lunches beside the sea.</p>
+                <button class="text-button" onclick="showPlace('amalfi')">Discover Amalfi ↗</button>
+            </div>
+        </article>
+
+        <article class="place-card">
+            <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=85" alt="Banff">
+            <div class="card-body">
+                <div class="tag">Canada · Nature</div>
+                <h3>Banff</h3>
+                <p>Turquoise lakes, dramatic mountain peaks and trails for every kind of explorer.</p>
+                <button class="text-button" onclick="showPlace('banff')">Discover Banff ↗</button>
+            </div>
+        </article>
+
+        <article class="place-card">
+            <img src="https://images.unsplash.com/photo-1518684079-3c830dCEF090?auto=format&fit=crop&w=900&q=85" alt="Dubai">
+            <div class="card-body">
+                <div class="tag">UAE · City break</div>
+                <h3>Dubai</h3>
+                <p>A striking mix of modern architecture, traditional souks and desert experiences.</p>
+                <button class="text-button" onclick="showPlace('dubai')">Discover Dubai ↗</button>
+            </div>
+        </article>
+
+        <article class="place-card">
+            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=85" alt="Mountain adventure">
+            <div class="card-body">
+                <div class="tag">Travel inspiration</div>
+                <h3>Chase the Outdoors</h3>
+                <p>Make room for fresh air, scenic viewpoints and the joy of taking the slower route.</p>
+                <button class="text-button" onclick="showPlace('outdoors')">Get inspired ↗</button>
+            </div>
+        </article>
+
+    </div>
+</section>
+
+<section class="feature-band" id="journal">
+
+    <div>
+        <div class="kicker">A little about us</div>
+
+        <h2>More than a checklist of places.</h2>
+
+        <p>
+            Roam & Revel is a travel journal made for people who believe
+            the best part of a trip is how it makes them feel. We share
+            destination ideas, simple planning advice and inspiration
+            to help you travel thoughtfully.
+        </p>
+
+        <p>
+            Whether it is a weekend escape or a journey across the world,
+            start with curiosity and leave space for the unexpected.
+        </p>
+
+        <div class="stats">
+            <div>
+                <strong>05</strong>
+                <span>Featured escapes</span>
+            </div>
+
+            <div>
+                <strong>01</strong>
+                <span>Big wide world</span>
+            </div>
+
+            <div>
+                <strong>∞</strong>
+                <span>Ways to explore</span>
+            </div>
+        </div>
+    </div>
+
+    <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1100&q=85" alt="Mountain lake">
+</section>
+
+<section class="tips" id="tips">
+
+    <div class="section-top">
+        <div>
+            <div class="kicker">Before you go</div>
+            <h2>Notes for the road</h2>
+        </div>
+
+        <p>
+            A few small habits can make every trip smoother,
+            safer and more enjoyable.
+        </p>
+    </div>
+
+    <div class="tip-grid">
+
+        <div class="tip">
+            <div class="emoji">🗺️</div>
+            <h3>Plan, then wander</h3>
+            <p>Save key addresses and transport options, but leave time for spontaneous discoveries.</p>
+        </div>
+
+        <div class="tip">
+            <div class="emoji">🎒</div>
+            <h3>Pack lightly</h3>
+            <p>Choose versatile clothes, comfortable shoes and only the essentials you will use.</p>
+        </div>
+
+        <div class="tip">
+            <div class="emoji">💳</div>
+            <h3>Track your spend</h3>
+            <p>Set a daily budget and keep a small emergency amount separate from your main cash.</p>
+        </div>
+
+        <div class="tip">
+            <div class="emoji">🌿</div>
+            <h3>Travel kindly</h3>
+            <p>Respect local customs, support local businesses and take care of the places you visit.</p>
+        </div>
+
+    </div>
+</section>
+
+<section id="contact">
+
+    <div class="contact-wrap">
+
+        <div class="contact-copy">
+            <div class="kicker">Say hello</div>
+            <h2>Let's talk travel.</h2>
+
+            <p>
+                Have a destination suggestion or a question about the
+                journal? Send a note using the form. We'd love to hear
+                from you.
+            </p>
+        </div>
+
+        <form class="contact-form" onsubmit="submitNote(event)">
+
+            <input type="text" id="visitorName" placeholder="Your name" required>
+
+            <input type="email" id="visitorEmail" placeholder="Email address" required>
+
+            <textarea id="visitorMessage" placeholder="Write your message..." required></textarea>
+
+            <button class="button" type="submit">Send your note ↗</button>
+
+            <div id="formMessage" aria-live="polite"></div>
+
+        </form>
+
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <strong>Roam <span style="color:#e58b6d">&</span> Revel.</strong>
+    <span>Collect moments, not just miles. © 2026 Roam & Revel</span>
+</footer>
+
+<div class="modal" id="placeModal" onclick="closeOnBackdrop(event)">
+
+    <div class="modal-box">
+
+        <button class="close" aria-label="Close" onclick="closePlace()">&times;</button>
+
+        <div class="kicker">Destination guide</div>
+
+        <h2 id="placeTitle"></h2>
+
+        <p id="placeDescription"></p>
+
+        <p id="placeSeason"></p>
+
+        <p id="placeHighlights"></p>
+
+        <p id="placeTip"></p>
+
+        <button class="button" onclick="closePlace()">Back to destinations</button>
+
+    </div>
+</div>
+
+<script>
+
+const placeDetails = {
+
+    munnar: {
+        title: "Munnar, India",
+        description: "A refreshing hill station in Kerala known for endless tea plantations, cool weather and peaceful mountain views.",
+        season: "Best time: September to March for pleasant sightseeing.",
+        highlights: "Highlights: Tea Museum, Eravikulam National Park, Mattupetty Dam and Top Station.",
+        tip: "Travel note: Carry a light jacket and plan an early morning visit for misty viewpoints."
+    },
+
+    kyoto: {
+        title: "Kyoto, Japan",
+        description: "A historic city where traditional wooden streets, peaceful shrines and beautiful gardens create a memorable atmosphere.",
+        season: "Best time: March to May for cherry blossoms or October to November for autumn colours.",
+        highlights: "Highlights: Fushimi Inari Shrine, Arashiyama Bamboo Grove, Kinkaku-ji and Gion.",
+        tip: "Travel note: Use public transport and be respectful in temples and residential lanes."
+    },
+
+    amalfi: {
+        title: "Amalfi Coast, Italy",
+        description: "A scenic stretch of southern Italian coastline famous for colourful villages, dramatic cliffs and Mediterranean views.",
+        season: "Best time: May to June or September for warm weather and fewer crowds.",
+        highlights: "Highlights: Positano, Amalfi town, Ravello and boat trips along the coast.",
+        tip: "Travel note: Roads can be narrow and busy, so check local transport schedules before travelling."
+    },
+
+    banff: {
+        title: "Banff, Canada",
+        description: "A mountain destination surrounded by the Canadian Rockies, with clear lakes, forest trails and spectacular scenery.",
+        season: "Best time: June to September for hiking; December to March for winter activities.",
+        highlights: "Highlights: Lake Louise, Moraine Lake area, Banff Gondola and Bow Falls.",
+        tip: "Travel note: Check park access and shuttle arrangements before visiting popular lakes."
+    },
+
+    dubai: {
+        title: "Dubai, UAE",
+        description: "A lively city blending futuristic landmarks, shopping, cultural neighbourhoods and desert landscapes.",
+        season: "Best time: November to March for more comfortable outdoor weather.",
+        highlights: "Highlights: Burj Khalifa, Dubai Creek, Al Fahidi Historic District and desert safari.",
+        tip: "Travel note: Dress respectfully in traditional areas and check local rules before activities."
+    },
+
+    outdoors: {
+        title: "Find your outdoor escape",
+        description: "Sometimes the best trip is a simple escape into nature, away from busy routines and crowded streets.",
+        season: "Best time: It depends on the region, weather and activity you have planned.",
+        highlights: "Ideas: Scenic hikes, lakeside picnics, sunrise viewpoints and nature photography.",
+        tip: "Travel note: Check weather forecasts, carry water and follow marked paths."
+    }
+};
+
+function showPlace(key) {
+
+    const item = placeDetails[key];
+
+    document.getElementById("placeTitle").textContent = item.title;
+
+    document.getElementById("placeDescription").textContent = item.description;
+
+    document.getElementById("placeSeason").textContent = item.season;
+
+    document.getElementById("placeHighlights").textContent = item.highlights;
+
+    document.getElementById("placeTip").textContent = item.tip;
+
+    document.getElementById("placeModal").style.display = "flex";
+}
+
+function closePlace() {
+    document.getElementById("placeModal").style.display = "none";
+}
+
+function closeOnBackdrop(event) {
+
+    if (event.target.id === "placeModal") {
+        closePlace();
+    }
+}
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.key === "Escape") {
+        closePlace();
+    }
+});
+
+function submitNote(event) {
+
+    event.preventDefault();
+
+    const name = document.getElementById("visitorName").value.trim();
+
+    document.getElementById("formMessage").textContent =
+        "Thanks, " + name + "! Your note has been received.";
+
+    event.target.reset();
+}
+
+document.querySelectorAll("nav a").forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        document.querySelectorAll("nav a").forEach(item => {
+            item.classList.remove("active");
+        });
+
+        link.classList.add("active");
+    });
+});
+
+</script>
+
+</body>
+</html>
